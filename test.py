@@ -16,6 +16,7 @@ opt.nThreads = 1   # test code only supports nThreads=1
 opt.batchSize = 1  #test code only supports batchSize=1
 opt.serial_batches = True # no shuffle
 
+#load data
 data_loader = CreateDataLoader(opt)
 dataset_paired, paired_dataset_size = data_loader.load_data_test()
 
