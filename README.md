@@ -2,15 +2,14 @@
 
 VIGAN: Missing View Imputation with Generative Adversarial Networks
 
-# train the model
+## train the model
 
 python train.py
 
-# test the model
+## test the model
 
 python test.py
 
-
-# Acknowledgments
+## Acknowledgments
 
 Code is inspired by pytorch-cycleGAN and CoGAN.
