@@ -1,15 +1,22 @@
 # VIGAN
 
-VIGAN: Missing View Imputation with Generative Adversarial Networks
+This is a PyTorch implementation of the paper "VIGAN: Missing View Imputation with Generative Adversarial Networks". For more details please refer to our arXiv paper. Please cite the paper in your publications if you find the source code useful to your research.
 
-## train the model
+##Installation
 
-python train.py
+Install pytorch and torchvision. 
 
-## test the model
+## VIGAN model
 
-python test.py
+VIGAN is the model for imputing missing views based on generative adversarial networks called VIGAN which combines cross-domain relations given unpaired data with multi-view relations given paired data.
+
+### Train the model
+Train the network to learn to generate digit images and the corresponding edges images of the digits images， inspired by CoGAN(https://github.com/chaoshangcs/CoGAN_PyTorch)).
+  python train.py
+
+### Test the model
+  python test.py
 
 ## Acknowledgments
 
-Code is inspired by pytorch-cycleGAN and CoGAN.
+Code is inspired by CycleGAN(https://github.com/chaoshangcs/pytorch-CycleGAN-and-pix2pix) and CoGAN(https://github.com/chaoshangcs/CoGAN_PyTorch).
