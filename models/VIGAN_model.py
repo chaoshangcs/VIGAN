@@ -250,7 +250,7 @@ class VIGANModel(BaseModel):
         pred_fake = self.netD_B.forward(self.AEfakeA)
         self.loss_AE_GB = self.criterionGAN(pred_fake, True)
 
-        self.loss_AE_GA_GB = 5 * ( self.loss_AE_GA + self.loss_AE_GB) + \
+        self.loss_AE_GA_GB = 2 * ( self.loss_AE_GA + self.loss_AE_GB) + \
                              1 * self.loss_AE + 1 * (self.loss_cycle_A_AE + self.loss_cycle_B_AE)
         self.loss_AE_GA_GB.backward()
 

@@ -56,12 +56,6 @@ for epoch in range(1, pre_epoch_cycle+1):
             if opt.display_id > 0:
                 visualizer.plot_current_errors(epoch, float(epoch_iter)/unpaired_dataset_size, opt, errors)
 
-    if epoch % opt.save_epoch_freq == 0:
-        print('saving the model at the end of epoch %d, iters %d' %
-              (epoch, total_steps))
-        model.save('latest')
-        model.save(epoch)
-
     print('End of epoch %d / %d \t Time Taken: %d sec' %
           (epoch, pre_epoch_cycle, time.time() - epoch_start_time))
 
