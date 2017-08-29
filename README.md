@@ -14,7 +14,7 @@ VIGAN is the model for imputing missing views based on generative adversarial ne
 [X->Y missing view imputation](https://github.com/chaoshangcs/VIGAN/tree/master/imgs/img1.png)
 [Y->X missing view imputation](https://github.com/chaoshangcs/VIGAN/tree/master/imgs/img2.png)
 
-[[https://github.com/chaoshangcs/VIGAN/imgs/img1.png]]
+[[https://github.com/chaoshangcs/VIGAN/tree/master/imgs/img1.png]]
 
 
 ### Train the model
