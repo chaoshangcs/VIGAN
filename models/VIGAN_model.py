@@ -24,12 +24,10 @@ class VIGANModel(BaseModel):
         self.input_B = self.Tensor(nb, opt.output_nc, size, size)
 
         # load/define networks
-
         self.netG_A = networks.define_G(opt.input_nc, opt.output_nc,
                                      opt.ngf, opt.which_model_netG, opt.norm, self.gpu_ids)
         self.netG_B = networks.define_G(opt.output_nc, opt.input_nc,
                                     opt.ngf, opt.which_model_netG, opt.norm, self.gpu_ids)
-
         self.AE = networks.define_AE(28*28, 28*28, self.gpu_ids)
 
         if self.isTrain:
@@ -53,6 +51,7 @@ class VIGANModel(BaseModel):
             self.old_lr = opt.lr
             self.fake_A_pool = ImagePool(opt.pool_size)
             self.fake_B_pool = ImagePool(opt.pool_size)
+
             # define loss functions
             self.criterionGAN = networks.GANLoss(use_lsgan=not opt.no_lsgan, tensor=self.Tensor)
             self.criterionCycle = torch.nn.L1Loss()
@@ -176,7 +175,7 @@ class VIGANModel(BaseModel):
         self.loss_G.backward()
 
     ############################################################################
-    #VIGAN added
+    # Define backward function for VIGAN
     ############################################################################
 
     def backward_AE_pretrain(self):
@@ -186,10 +185,6 @@ class VIGANModel(BaseModel):
         self.loss_AE_pre.backward()
 
     def backward_AE(self):
-        # lambda_C = self.opt.lambda_C
-        # lambda_D = self.opt.lambda_D
-        lambda_C = 1
-        lambda_D = 1
 
         # fake data
         self.fake_B = self.netG_A.forward(self.real_A)
@@ -198,12 +193,12 @@ class VIGANModel(BaseModel):
         # Autoencoder loss: fakeA
         AEfakeA, AErealB = self.AE.forward(self.fake_A, self.real_B)
         self.loss_AE_fA_rB = (
-                             self.criterionAE(AEfakeA, self.real_A) + self.criterionAE(AErealB, self.real_B)) * lambda_C
+                             self.criterionAE(AEfakeA, self.real_A) + self.criterionAE(AErealB, self.real_B)) * 1
 
         # Autoencoder loss: fakeB
         AErealA, AEfakeB = self.AE.forward(self.real_A, self.fake_B)
         self.loss_AE_rA_fB = (
-                             self.criterionAE(AErealA, self.real_A) + self.criterionAE(AEfakeB, self.real_B)) * lambda_D
+                             self.criterionAE(AErealA, self.real_A) + self.criterionAE(AEfakeB, self.real_B)) * 1
 
         # combined loss
         self.loss_AE = (self.loss_AE_fA_rB + self.loss_AE_rA_fB) * 0.5
@@ -221,6 +216,9 @@ class VIGANModel(BaseModel):
 
 
     def backward_AE_GA_GB(self):
+
+        lambda_C = self.opt.lambda_C
+        lambda_D = self.opt.lambda_D
 
         # fake data
         # G_A(A)
@@ -250,8 +248,8 @@ class VIGANModel(BaseModel):
         pred_fake = self.netD_B.forward(self.AEfakeA)
         self.loss_AE_GB = self.criterionGAN(pred_fake, True)
 
-        self.loss_AE_GA_GB = 2 * ( self.loss_AE_GA + self.loss_AE_GB) + \
-                             1 * self.loss_AE + 1 * (self.loss_cycle_A_AE + self.loss_cycle_B_AE)
+        self.loss_AE_GA_GB = lambda_C * ( self.loss_AE_GA + self.loss_AE_GB) + \
+                             lambda_D * self.loss_AE + 1 * (self.loss_cycle_A_AE + self.loss_cycle_B_AE)
         self.loss_AE_GA_GB.backward()
 
 
@@ -273,8 +271,9 @@ class VIGANModel(BaseModel):
         self.backward_D_B()
         self.optimizer_D_B.step()
 
-    ############################################################################################
-    # Added by VIGAN
+    ############################################################################
+    # Define optimize function for VIGAN
+    ############################################################################
     def optimize_parameters_pretrain_AE(self):
         # forward
         self.forward()
@@ -302,9 +301,10 @@ class VIGANModel(BaseModel):
             self.optimizer_D_B_AE.zero_grad()
             self.backward_D_B_AE()
             self.optimizer_D_B_AE.step()
+
     ############################################################################################
-
-
+    # Get errors for visualization
+    ############################################################################################
     def get_current_errors_cycle(self):
         AE_D_A = self.loss_D_A.data[0]
         AE_G_A = self.loss_G_A.data[0]
@@ -320,7 +320,6 @@ class VIGANModel(BaseModel):
         else:
             return OrderedDict([('D_A', AE_D_A), ('G_A', AE_G_A), ('Cyc_A', Cyc_A),
                                 ('D_B', AE_D_B), ('G_B', AE_G_B), ('Cyc_B', Cyc_B)])
-
 
     def get_current_errors(self):
         D_A = self.loss_D_A_AE.data[0]

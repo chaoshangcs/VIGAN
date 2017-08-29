@@ -18,6 +18,8 @@ class TrainOptions(BaseOptions):
         self.parser.add_argument('--no_lsgan', action='store_true', help='do *not* use least square GAN, if false, use vanilla GAN')
         self.parser.add_argument('--lambda_A', type=float, default=10.0, help='weight for cycle loss (A -> B -> A)')
         self.parser.add_argument('--lambda_B', type=float, default=10.0, help='weight for cycle loss (B -> A -> B)')
+        self.parser.add_argument('--lambda_C', type=float, default=2.0, help='weight for AE(Gx) loss in VIGAN')
+        self.parser.add_argument('--lambda_D', type=float, default=5.0, help='weight for AE loss in VIGAN')
         self.parser.add_argument('--pool_size', type=int, default=0, help='the size of image buffer that stores previously generated images')
         self.parser.add_argument('--no_html', action='store_true', help='do not save intermediate training results to [opt.checkpoints_dir]/[opt.name]/web/')
         # NOT-IMPLEMENTED self.parser.add_argument('--preprocessing', type=str, default='resize_and_crop', help='resizing/cropping strategy')

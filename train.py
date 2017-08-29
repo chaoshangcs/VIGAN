@@ -5,23 +5,25 @@ opt = TrainOptions().parse()  # set CUDA_VISIBLE_DEVICES before import torch
 from data.data_loader import CreateDataLoader
 from models.models import create_model
 from util.visualizer import Visualizer
-from sklearn.metrics import mean_squared_error
-from math import sqrt
 
+
+# Load data
 data_loader = CreateDataLoader(opt)
-
 dataset_paired, paired_dataset_size = data_loader.load_data_pair()
 dataset_unpaired, unpaired_dataset_size = data_loader.load_data_unpair()
 
+# Create Model
 model = create_model(opt)
 visualizer = Visualizer(opt)
 
+# Start Training
 print('Start training')
-#############
-# Autoencoder
-#############
 
-pre_epoch_AE = 1
+#################################################
+# Step1: Autoencoder
+#################################################
+
+pre_epoch_AE = 1 # number of iteration for autoencoder pre-training
 total_steps = 0
 for epoch in range(1, pre_epoch_AE+1):
     for i,(images_a, images_b) in enumerate(dataset_paired):
@@ -34,16 +36,14 @@ for epoch in range(1, pre_epoch_AE+1):
           (epoch, pre_epoch_AE))
 
 
-#############
-# cycleGAN
-#############
-pre_epoch_cycle = 1
+#################################################
+# Step2: CycleGAN
+#################################################
+pre_epoch_cycle = 1 # number of iteration for CycleGAN training
 total_steps = 0
 for epoch in range(1, pre_epoch_cycle+1):
     epoch_start_time = time.time()
     for i,(images_a, images_b) in enumerate(dataset_unpaired):
-        if i >= 1000:
-            break
         iter_start_time = time.time()
         total_steps += opt.batchSize
         epoch_iter = total_steps - unpaired_dataset_size * (epoch - 1)
@@ -63,9 +63,9 @@ for epoch in range(1, pre_epoch_cycle+1):
         model.update_learning_rate()
 
 
-##############
-# VIGAN
-##############
+#################################################
+# Step3:  VIGAN
+#################################################
 print('step3')
 total_steps = 0
 for epoch in range(1, opt.niter + opt.niter_decay + 1):

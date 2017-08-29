@@ -6,7 +6,9 @@ import torch.nn.functional as F
 import torch.optim as optim
 
 ###########################
-#Autoencoder
+# Autoencoder
+###########################
+# You can modify the model using convolutional layer
 class AutoEncoder(nn.Module):
     def __init__(self, input_A, input_B):
         super(AutoEncoder, self).__init__()
@@ -20,7 +22,6 @@ class AutoEncoder(nn.Module):
         self.layer5_2 = nn.Linear(400, 500)
         self.layer6_1 = nn.Linear(500, input_A)
         self.layer6_2 = nn.Linear(500, input_B)
-
         self.drop = 0.5
 
     def forward(self, x1, x2):

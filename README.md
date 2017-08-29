@@ -1,6 +1,6 @@
 # VIGAN
 
-This is a PyTorch implementation of the paper "[VIGAN: Missing View Imputation with Generative Adversarial Networks](https://arxiv.org/abs/1708.06724)". For more details please refer to our arXiv paper. Please cite the paper in your publications if you find the source code useful to your research.
+This is a PyTorch implementation of the paper "VIGAN: Missing View Imputation with Generative Adversarial Networks". For more details please refer to our arXiv paper. Please cite the paper in your publications if you find the source code useful to your research.
 
 ## Installation
 
