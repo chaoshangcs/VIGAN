@@ -10,6 +10,10 @@ Install pytorch and torchvision.
 
 VIGAN is the model for imputing missing views based on generative adversarial networks which combines cross-domain relations given unpaired data with multi-view relations given paired data.
 
+[[https://github.com/chaoshangcs/imgs/img1.png|alt=octocat]]
+[[https://github.com/chaoshangcs/imgs/img2.png|alt=octocat]]
+
+
 ### Train the model
 Train the network to learn to generate digit images and the corresponding edges images of the digits images, inspired by [CoGAN](https://github.com/chaoshangcs/CoGAN_PyTorch). When you train the model, you can tune the parameters in "options" folder.
 
