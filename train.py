@@ -22,8 +22,8 @@ print('Start training')
 #################################################
 # Step1: Autoencoder
 #################################################
-
-pre_epoch_AE = 1 # number of iteration for autoencoder pre-training
+print('step 1')
+pre_epoch_AE = 5 # number of iteration for autoencoder pre-training
 total_steps = 0
 for epoch in range(1, pre_epoch_AE+1):
     for i,(images_a, images_b) in enumerate(dataset_paired):
@@ -39,7 +39,8 @@ for epoch in range(1, pre_epoch_AE+1):
 #################################################
 # Step2: CycleGAN
 #################################################
-pre_epoch_cycle = 1 # number of iteration for CycleGAN training
+print('step 2')
+pre_epoch_cycle = 5 # number of iteration for CycleGAN training
 total_steps = 0
 for epoch in range(1, pre_epoch_cycle+1):
     epoch_start_time = time.time()
@@ -66,7 +67,7 @@ for epoch in range(1, pre_epoch_cycle+1):
 #################################################
 # Step3:  VIGAN
 #################################################
-print('step3')
+print('step 3')
 total_steps = 0
 for epoch in range(1, opt.niter + opt.niter_decay + 1):
     epoch_start_time = time.time()
