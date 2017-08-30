@@ -16,9 +16,14 @@ VIGAN is the model for imputing missing views based on generative adversarial ne
   <img width="300" height="200" src="https://github.com/chaoshangcs/VIGAN/blob/master/imgs/img2.png" width="425"/>
 </p>
 
+### Dataset
+
+Benchmark dataset: MNIST (http://www.cs.toronto.edu/~gdahl/mnist.npz.gz).
+
+Train the network to learn to generate digit images and the corresponding edges images of the digits images, inspired by [CoGAN](https://github.com/chaoshangcs/CoGAN_PyTorch). We provide a python code to automaticlly generate training data in the form of pairs of digit images and the corresponding edges images.
 
 ### Train the model
-Train the network to learn to generate digit images and the corresponding edges images of the digits images, inspired by [CoGAN](https://github.com/chaoshangcs/CoGAN_PyTorch). When you train the model, you can tune the parameters in "options" folder.
+When you train the model, you can tune the parameters in "options" folder.
 
     python train.py
 
