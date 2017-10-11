@@ -71,6 +71,7 @@ print('step 3')
 total_steps = 0
 for epoch in range(1, opt.niter + opt.niter_decay + 1):
     epoch_start_time = time.time()
+	# You can use paired and unpaired data to train. Here we only use paired samples to train.
     for i,(images_a, images_b) in enumerate(dataset_paired):
         iter_start_time = time.time()
         total_steps += opt.batchSize
